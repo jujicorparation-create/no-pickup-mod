@@ -1,5 +1,6 @@
 package com.nopickup.mod;
 
+import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.server.network.ServerPlayerEntity;
 
@@ -12,15 +13,17 @@ public class NoPickupCommand {
     public static final Set<UUID> disabledPlayers = new HashSet<>();
 
     public static void register() {
+        PayloadTypeRegistry.playC2S().register(
+                NoPickupNetwork.ID, NoPickupNetwork.CODEC);
+
         ServerPlayNetworking.registerGlobalReceiver(
-                NoPickupNetwork.TOGGLE_PACKET_ID,
-                (server, player, handler, buf, responseSender) -> {
-                    boolean disable = buf.readBoolean();
-                    server.execute(() -> {
-                        if (disable) {
-                            disabledPlayers.add(player.getUuid());
+                NoPickupNetwork.ID,
+                (payload, context) -> {
+                    context.server().execute(() -> {
+                        if (payload.disable()) {
+                            disabledPlayers.add(context.player().getUuid());
                         } else {
-                            disabledPlayers.remove(player.getUuid());
+                            disabledPlayers.remove(context.player().getUuid());
                         }
                     });
                 }
@@ -30,4 +33,4 @@ public class NoPickupCommand {
     public static boolean isPickupDisabled(ServerPlayerEntity player) {
         return disabledPlayers.contains(player.getUuid());
     }
-}
+            }
