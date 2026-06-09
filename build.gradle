@@ -1,5 +1,5 @@
 plugins {
-    id 'fabric-loom' version '1.7-SNAPSHOT'
+    id 'fabric-loom' version '1.9.2'
     id 'maven-publish'
 }
 
@@ -11,16 +11,6 @@ base {
 }
 
 repositories {}
-
-loom {
-    splitEnvironmentSourceSets()
-    mods {
-        "nopickup" {
-            sourceSet sourceSets.main
-            sourceSet sourceSets.client
-        }
-    }
-}
 
 dependencies {
     minecraft "com.mojang:minecraft:1.21.1"
