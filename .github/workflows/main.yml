@@ -16,6 +16,12 @@ jobs:
           java-version: '21'
           distribution: 'temurin'
 
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v3
+
+      - name: Give gradlew permission
+        run: chmod +x gradlew
+
       - name: Build
         run: ./gradlew build
 
