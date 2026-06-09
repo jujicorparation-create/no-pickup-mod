@@ -1,0 +1,5 @@
+{
+  "key.nopickup.enable": "Disable Item Pickup (NoPickup ON)",
+  "key.nopickup.disable": "Enable Item Pickup (NoPickup OFF)",
+  "category.nopickup": "NoPickup Mod"
+}
